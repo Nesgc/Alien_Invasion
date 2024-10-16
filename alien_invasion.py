@@ -34,7 +34,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets()
-            
+            self._update_aliens()
             self._update_screen()
             self.clock.tick(60)
 
@@ -80,6 +80,9 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
     
+    def _update_aliens(self):
+        self.aliens.update()
+    
     def _create_fleet(self):
         alien= Alien(self)
         alien_width, alien_height = alien.rect.size
@@ -112,7 +115,7 @@ class AlienInvasion:
             bullet.draw_bullet()
         
         self.ship.blitme()
-        self.character.blit_character()
+        #self.character.blit_character()
         self.aliens.draw(self.screen)
                 
         #make the most recently drawn screen visible
