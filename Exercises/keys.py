@@ -17,6 +17,6 @@ class Keys:
                     print(event.key)
     
 if __name__ == '__main__':
-    #make a game instance, and run the game
+    #make a game instance, and run the game 
     ai=Keys()
     ai.run_game()

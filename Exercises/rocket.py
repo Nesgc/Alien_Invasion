@@ -9,7 +9,7 @@ class Rocket:
         self.screen=pygame.display.set_mode((1200,800))
         self.screen_rect = self.screen.get_rect()
         
-        #load the ship image and get its rect
+        #load the ship image and get its rect 
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
         self.moving_right = False
