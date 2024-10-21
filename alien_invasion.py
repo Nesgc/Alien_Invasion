@@ -7,6 +7,7 @@ from character import Character
 from bullet import Bullet
 from alien import Alien
 from game_stats import GameStats
+from button import Button
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior"""
@@ -28,8 +29,12 @@ class AlienInvasion:
         self.character = Character(self)
         self.bullets = pygame.sprite.Group()
         self.aliens=pygame.sprite.Group()
-        self.game_active= True
+        #self.game_active= True
         self._create_fleet()
+        
+        self.game_active=False
+        
+        self.play_button = Button(self,"Play")
         
     def run_game(self):
         """start the main loop for the game"""
@@ -55,7 +60,26 @@ class AlienInvasion:
                 
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
-                    
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+    
+    def _check_play_button(self,mouse_pos):
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_active:
+            
+            self.stats.reset_stats()
+            self.game_active = True
+            
+            self.bullets.empty()
+            self.aliens.empty()
+            
+            self._create_fleet()
+            self.ship.center_ship()
+            
+            pygame.mouse.set_visible(False)
+    
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
                 self.ship.moving_right = True
@@ -152,9 +176,10 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.game_active = False
+            pygame.mouse.set_visible(True)
         
     def _check_aliens_bottom(self):
-        for alien in self.alien.sprites():
+        for alien in self.aliens.sprites():
             if alien.rect.bottom >= self.settings.screen_height:
                 self._ship_hit()
                 break
@@ -169,7 +194,10 @@ class AlienInvasion:
         self.ship.blitme()
         #self.character.blit_character()
         self.aliens.draw(self.screen)
-                
+        
+        if not self.game_active:
+            self.play_button.draw_button()
+        
         #make the most recently drawn screen visible
         pygame.display.flip()
     
