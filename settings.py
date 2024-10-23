@@ -22,6 +22,8 @@ class Settings:
         
         self.speedup_scale = 1.1
         
+        self.score_scale = 1.5
+        
         self.initialize_dynamic_settings()
         
         #fleet direction of 1 represents right; -1 its left
@@ -41,3 +43,4 @@ class Settings:
         self.ship_speed *= self.speedup_scale
         self.bullet_speed *= self.speedup_scale
         self.alien_speed *= self.speedup_scale
+        print(self.alien_points)
